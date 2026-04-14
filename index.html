@@ -5,31 +5,80 @@
   <title>Charlie HQ</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #111;
-      color: #eee;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
       margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0f1115;
+      color: #e6e6e6;
     }
+
     .container {
-      text-align: center;
+      max-width: 900px;
+      margin: 80px auto;
+      padding: 0 20px;
     }
+
     h1 {
       font-size: 2.5rem;
       margin-bottom: 10px;
     }
-    p {
+
+    p.subtitle {
+      opacity: 0.6;
+      margin-bottom: 40px;
+    }
+
+    .projects {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .card {
+      background: #1a1d23;
+      padding: 20px;
+      border-radius: 10px;
+      text-decoration: none;
+      color: inherit;
+      transition: 0.2s ease;
+      border: 1px solid #2a2f38;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: #3a404c;
+    }
+
+    .card h2 {
+      margin-top: 0;
+    }
+
+    .card p {
       opacity: 0.7;
+    }
+
+    @media (max-width: 600px) {
+      .projects {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Charlie HQ</h1>
-    <p>Personal intranet in progress</p>
+    <p class="subtitle">Personal intranet for projects, thinking, and exploration</p>
+
+    <div class="projects">
+      <a class="card" href="travel.html">
+        <h2>Travel</h2>
+        <p>Map of places I've been and want to go</p>
+      </a>
+
+      <a class="card" href="photography.html">
+        <h2>Photography</h2>
+        <p>Gallery of my photography work</p>
+      </a>
+    </div>
   </div>
 </body>
 </html>
