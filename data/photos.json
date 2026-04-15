@@ -1,14 +1,41 @@
 [
-  {
-    "file": "ardley.JPG",
-    "caption": "Industrial plume",
-    "location": "Ardley, Oxfordshire",
-    "series": "Bicester Lines"
-  },
-  {
-    "file": "stairs.jpg",
-    "caption": "Movement through space",
-    "location": "Oxford",
-    "series": "Architecture"
-  }
+  { "file": "ardley.JPG", "caption": "Industrial plume", "location": "Ardley, Oxfordshire", "series": "Bicester Lines" },
+
+  { "file": "Brill.jpg", "caption": "Village silhouette", "location": "Brill, Oxfordshire", "series": "Bicester Lines" },
+  { "file": "Brill close-up.JPG", "caption": "Detail and structure", "location": "Brill, Oxfordshire", "series": "Bicester Lines" },
+
+  { "file": "Cromarty Fishertown.jpg", "caption": "Quiet coastal geometry", "location": "Cromarty, Scotland", "series": "Architecture" },
+
+  { "file": "DSCF1124.JPG", "caption": "Framed light", "location": "Oxford", "series": "Street" },
+  { "file": "DSCF1198.JPG", "caption": "Walking shadow", "location": "Oxford", "series": "Street" },
+  { "file": "DSCF1201.JPG", "caption": "Lines and movement", "location": "Oxford", "series": "Street" },
+  { "file": "DSCF1207.JPG", "caption": "Winter path", "location": "Oxford", "series": "Bicester Lines" },
+  { "file": "DSCF1212.JPG", "caption": "Urban contrast", "location": "Oxford", "series": "Street" },
+  { "file": "DSCF1218.JPG", "caption": "Branches and structure", "location": "Oxford", "series": "Bicester Lines" },
+  { "file": "DSCF1226.JPG", "caption": "Fog and distance", "location": "Oxfordshire", "series": "Bicester Lines" },
+
+  { "file": "DSCF1439.JPG", "caption": "Framed passage", "location": "Oxford", "series": "Architecture" },
+  { "file": "DSCF1453.JPG", "caption": "Street interaction", "location": "Oxford", "series": "Street" },
+  { "file": "DSCF1458.JPG", "caption": "Interior geometry", "location": "Oxford", "series": "Architecture" },
+
+  { "file": "DSCF1483.JPG", "caption": "Street depth", "location": "Oxford", "series": "Street" },
+  { "file": "DSCF1505.JPG", "caption": "Curves and rhythm", "location": "Oxford", "series": "Architecture" },
+  { "file": "DSCF1553.JPG", "caption": "Bare trees", "location": "Oxfordshire", "series": "Bicester Lines" },
+  { "file": "DSCF1569.JPG", "caption": "Urban contrast", "location": "Oxford", "series": "Street" },
+  { "file": "DSCF1599.JPG", "caption": "Silhouette study", "location": "Oxford", "series": "Street" },
+  { "file": "DSCF1605.JPG", "caption": "Wall and shadow", "location": "Oxford", "series": "Architecture" },
+  { "file": "DSCF1629.JPG", "caption": "Repetition and movement", "location": "Oxford", "series": "Architecture" },
+  { "file": "DSCF1632.JPG", "caption": "Interior depth", "location": "Oxford", "series": "Architecture" },
+  { "file": "DSCF1652.JPG", "caption": "Crowd flow", "location": "London", "series": "Street" },
+
+  { "file": "Fulham Broadway.jpg", "caption": "Underground motion", "location": "London", "series": "Street" },
+  { "file": "Here Iyes John.jpg", "caption": "Quiet detail", "location": "Oxford", "series": "Bicester Lines" },
+  { "file": "Last Bookshop.jpg", "caption": "Facade symmetry", "location": "Oxford", "series": "Architecture" },
+  { "file": "Martin on Side Pike.jpg", "caption": "Mountain figure", "location": "Lake District", "series": "Landscape" },
+
+  { "file": "OUP Reflections.jpg", "caption": "Reflected structure", "location": "Oxford", "series": "Architecture" },
+  { "file": "Oxford - New and Old.jpg", "caption": "Time contrast", "location": "Oxford", "series": "Architecture" },
+  { "file": "Oxford Reflections.jpg", "caption": "Glass and geometry", "location": "Oxford", "series": "Architecture" },
+
+  { "file": "stairs.jpg", "caption": "Movement through space", "location": "Oxford", "series": "Architecture" }
 ]
