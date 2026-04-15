@@ -62,6 +62,7 @@
       overflow: hidden;
       border-radius: 10px;
       background: #1a1d23;
+      min-height: 280px;
     }
 
     .photo img {
@@ -74,7 +75,7 @@
     }
 
     .photo:hover img {
-      transform: scale(1.05);
+      transform: scale(1.03);
       filter: grayscale(100%) contrast(120%);
     }
 
@@ -84,7 +85,7 @@
       left: 0;
       right: 0;
       padding: 10px 12px;
-      background: linear-gradient(transparent, rgba(0,0,0,0.8));
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
       font-size: 0.85rem;
       opacity: 0;
       transition: 0.2s ease;
@@ -92,6 +93,15 @@
 
     .photo:hover .caption {
       opacity: 1;
+    }
+
+    .error-message {
+      background: #2a1616;
+      border: 1px solid #5a2a2a;
+      color: #f5c2c2;
+      padding: 14px 16px;
+      border-radius: 10px;
+      margin-bottom: 18px;
     }
 
     @media (max-width: 900px) {
@@ -118,20 +128,45 @@
       <a class="back-link" href="index.html">← Back to dashboard</a>
     </div>
 
-    <div class="gallery">
-
-      <div class="photo">
-        <img src="assets/photos/stairs.jpg">
-        <div class="caption">Oxford, UK</div>
-      </div>
-
-      <div class="photo">
-        <img src="assets/photos/ardley.JPG">
-        <div class="caption">Ardley, UK</div>
-      </div>
-      
-    </div>
+    <div id="error"></div>
+    <div class="gallery" id="gallery"></div>
   </div>
+
+  <script>
+    async function loadPhotos() {
+      try {
+        const response = await fetch("data/photos.json");
+
+        if (!response.ok) {
+          throw new Error(`Failed to load photos: ${response.status}`);
+        }
+
+        const photos = await response.json();
+        const gallery = document.getElementById("gallery");
+
+        photos.forEach(photo => {
+          const div = document.createElement("div");
+          div.className = "photo";
+
+          div.innerHTML = `
+            <img src="assets/photos/${photo.file}" alt="${photo.caption}">
+            <div class="caption">${photo.caption}</div>
+          `;
+
+          gallery.appendChild(div);
+        });
+      } catch (err) {
+        console.error("Failed to load photos", err);
+        document.getElementById("error").innerHTML = `
+          <div class="error-message">
+            Could not load photography data.
+          </div>
+        `;
+      }
+    }
+
+    loadPhotos();
+  </script>
 
 </body>
 </html>
