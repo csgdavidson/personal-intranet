@@ -4,253 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Photography | Charlie HQ</title>
-
-  <style>
-    :root {
-      --bg: #05070b;
-      --panel: #11151b;
-      --panel-border: #242a34;
-      --text: #f2f2f2;
-      --muted: #8f97a3;
-      --muted-soft: #6f7782;
-      --active-bg: #f2f2f2;
-      --active-text: #05070b;
-      --max-width: 1400px;
-      --gutter: 16px;
-      --radius: 12px;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      background: var(--bg);
-    }
-
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-    }
-
-    .container {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 28px 20px 56px;
-    }
-
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 24px;
-      margin-bottom: 34px;
-      flex-wrap: wrap;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: clamp(2rem, 3vw, 2.6rem);
-      line-height: 1;
-      letter-spacing: -0.03em;
-      font-weight: 700;
-    }
-
-    .subtitle {
-      margin-top: 8px;
-      color: var(--muted);
-      font-size: 1rem;
-    }
-
-    .back-link {
-      text-decoration: none;
-      color: var(--text);
-      border: 1px solid var(--panel-border);
-      padding: 12px 16px;
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.04);
-      transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
-      white-space: nowrap;
-    }
-
-    .back-link:hover {
-      border-color: #394252;
-      background: rgba(255, 255, 255, 0.06);
-      transform: translateY(-1px);
-    }
-
-    .filters {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 22px;
-    }
-
-    .filter-btn {
-      background: rgba(255, 255, 255, 0.04);
-      color: var(--text);
-      border: 1px solid var(--panel-border);
-      border-radius: 999px;
-      padding: 10px 15px;
-      cursor: pointer;
-      font-size: 0.92rem;
-      transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
-    }
-
-    .filter-btn:hover {
-      border-color: #394252;
-      transform: translateY(-1px);
-    }
-
-    .filter-btn.active {
-      background: var(--active-bg);
-      color: var(--active-text);
-      border-color: var(--active-bg);
-    }
-
-    .gallery-meta {
-      margin-bottom: 24px;
-      font-size: 0.95rem;
-      color: var(--muted);
-    }
-
-    .gallery {
-      column-count: 3;
-      column-gap: var(--gutter);
-    }
-
-    .photo-card {
-      display: inline-block;
-      width: 100%;
-      margin: 0 0 22px;
-      break-inside: avoid;
-      page-break-inside: avoid;
-    }
-
-    .photo-frame {
-      margin: 0;
-    }
-
-    .photo-link {
-      display: block;
-      text-decoration: none;
-      color: inherit;
-    }
-
-    .photo-image-wrap {
-      background: #0d1015;
-      border-radius: var(--radius);
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.04);
-    }
-
-    .photo-image {
-      display: block;
-      width: 100%;
-      height: auto;
-      filter: grayscale(100%) contrast(108%);
-      transition: transform 0.28s ease, filter 0.28s ease, opacity 0.28s ease;
-    }
-
-    .photo-link:hover .photo-image {
-      transform: scale(1.012);
-      filter: grayscale(100%) contrast(116%);
-    }
-
-    .photo-meta {
-      padding-top: 10px;
-    }
-
-    .photo-caption {
-      margin: 0;
-      font-size: 0.95rem;
-      line-height: 1.45;
-      color: var(--text);
-      font-weight: 500;
-    }
-
-    .photo-detail-row {
-      margin-top: 6px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      font-size: 0.75rem;
-      line-height: 1.4;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted-soft);
-    }
-
-    .photo-detail {
-      white-space: nowrap;
-    }
-
-    .error-message {
-      background: #2a1616;
-      border: 1px solid #5a2a2a;
-      color: #f5c2c2;
-      padding: 14px 16px;
-      border-radius: 10px;
-      margin-bottom: 18px;
-    }
-
-    .empty-state {
-      color: var(--muted);
-      padding: 18px 0;
-      font-size: 0.95rem;
-    }
-
-    @media (max-width: 1100px) {
-      .gallery {
-        column-count: 2;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .container {
-        padding: 24px 16px 40px;
-      }
-
-      .topbar {
-        margin-bottom: 26px;
-      }
-
-      .gallery {
-        column-count: 1;
-        column-gap: 0;
-      }
-
-      .photo-card {
-        margin-bottom: 26px;
-      }
-
-      .back-link {
-        width: 100%;
-        text-align: center;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="styles/main.css" />
 </head>
 <body>
-
-  <div class="container">
-    <div class="topbar">
+  <main class="container">
+    <div class="page-header">
       <div>
-        <h1>Photography</h1>
-        <div class="subtitle">Black &amp; white explorations</div>
+        <h1 class="page-title">Photography</h1>
+        <div class="page-subtitle">Black &amp; white explorations</div>
       </div>
-      <a class="back-link" href="index.html">← Back to dashboard</a>
+      <a class="btn" href="index.html">← Back to dashboard</a>
     </div>
 
     <div id="error"></div>
     <div id="filters" class="filters"></div>
     <div id="galleryMeta" class="gallery-meta"></div>
     <div id="gallery" class="gallery"></div>
-  </div>
+  </main>
 
   <script>
     let allPhotos = [];
@@ -328,7 +98,8 @@
         const file = encodeURI(photo.file || "");
         const altText = caption || `${location}${series ? `, ${series}` : ""}` || "Photograph";
 
-        const detailParts = [location, series].filter(Boolean)
+        const detailParts = [location, series]
+          .filter(Boolean)
           .map(value => `<span class="photo-detail">${value}</span>`)
           .join("");
 
@@ -366,6 +137,5 @@
 
     loadPhotos();
   </script>
-
 </body>
 </html>
