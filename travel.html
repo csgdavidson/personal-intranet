@@ -5,180 +5,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Travel | Charlie HQ</title>
 
+  <link rel="stylesheet" href="styles/main.css" />
   <link
     rel="stylesheet"
     href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     crossorigin=""
   />
-
-  <style>
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #0f1115;
-      color: #e6e6e6;
-    }
-
-    .container {
-      max-width: 1100px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
-
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-      margin-bottom: 24px;
-      flex-wrap: wrap;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 2rem;
-    }
-
-    .subtitle {
-      margin: 8px 0 0;
-      opacity: 0.7;
-    }
-
-    .back-link {
-      color: #e6e6e6;
-      text-decoration: none;
-      border: 1px solid #2a2f38;
-      border-radius: 10px;
-      padding: 10px 14px;
-      background: #1a1d23;
-    }
-
-    .back-link:hover {
-      border-color: #3a404c;
-    }
-
-    .legend {
-      display: flex;
-      gap: 18px;
-      flex-wrap: wrap;
-      margin-bottom: 18px;
-      font-size: 0.95rem;
-      opacity: 0.9;
-    }
-
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 999px;
-      display: inline-block;
-    }
-
-    .dot-been {
-      background: #4ade80;
-    }
-
-    .dot-want {
-      background: #60a5fa;
-    }
-
-    .stats {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-      margin-bottom: 18px;
-    }
-
-    .stat-card {
-      background: #1a1d23;
-      border: 1px solid #2a2f38;
-      border-radius: 10px;
-      padding: 12px 16px;
-      min-width: 120px;
-    }
-
-    .stat-number {
-      font-size: 1.4rem;
-      font-weight: 700;
-      line-height: 1.1;
-    }
-
-    .stat-label {
-      font-size: 0.9rem;
-      opacity: 0.7;
-      margin-top: 4px;
-    }
-
-    #map {
-      height: 620px;
-      width: 100%;
-      border-radius: 14px;
-      overflow: hidden;
-      border: 1px solid #2a2f38;
-    }
-
-    .leaflet-popup-content-wrapper,
-    .leaflet-popup-tip {
-      background: #1a1d23;
-      color: #e6e6e6;
-    }
-
-    .popup-title {
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
-
-    .popup-meta {
-      opacity: 0.8;
-      font-size: 0.95rem;
-    }
-
-    .error-message {
-      background: #2a1616;
-      border: 1px solid #5a2a2a;
-      color: #f5c2c2;
-      padding: 14px 16px;
-      border-radius: 10px;
-      margin-bottom: 18px;
-    }
-
-    @media (max-width: 700px) {
-      #map {
-        height: 500px;
-      }
-    }
-  </style>
 </head>
 <body>
-  <div class="container">
-    <div class="topbar">
+  <main class="container">
+    <div class="page-header">
       <div>
-        <h1>Travel</h1>
-        <p class="subtitle">Places I've been and places I want to go</p>
+        <h1 class="page-title">Travel</h1>
+        <p class="page-subtitle">Places I've been and places I want to go</p>
       </div>
-      <a class="back-link" href="index.html">← Back to dashboard</a>
+      <a class="btn" href="index.html">← Back to dashboard</a>
     </div>
 
-    <div class="legend">
-      <div class="legend-item">
-        <span class="dot dot-been"></span>
+    <div class="travel-legend">
+      <div class="travel-legend-item">
+        <span class="travel-dot been"></span>
         <span>Been</span>
       </div>
-      <div class="legend-item">
-        <span class="dot dot-want"></span>
+      <div class="travel-legend-item">
+        <span class="travel-dot want"></span>
         <span>Want to go</span>
       </div>
     </div>
 
-    <div id="stats" class="stats"></div>
+    <div id="stats" class="travel-stats"></div>
     <div id="error"></div>
-    <div id="map"></div>
-  </div>
+
+    <div class="map-wrap">
+      <div id="map"></div>
+    </div>
+  </main>
 
   <script
     src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
@@ -201,18 +62,18 @@
         const wantPlaces = places.filter(p => p.status === "want").length;
 
         document.getElementById("stats").innerHTML = `
-          <div class="stat-card">
-            <div class="stat-number">${totalPlaces}</div>
+          <article class="stat-card">
+            <span class="stat-value">${totalPlaces}</span>
             <div class="stat-label">Total places</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">${beenPlaces}</div>
+          </article>
+          <article class="stat-card">
+            <span class="stat-value">${beenPlaces}</span>
             <div class="stat-label">Visited</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">${wantPlaces}</div>
+          </article>
+          <article class="stat-card">
+            <span class="stat-value">${wantPlaces}</span>
             <div class="stat-label">Want to go</div>
-          </div>
+          </article>
         `;
 
         const map = L.map("map", { worldCopyJump: true }).setView([25, 10], 2);
@@ -222,25 +83,37 @@
           attribution: "&copy; OpenStreetMap contributors"
         }).addTo(map);
 
+        const bounds = [];
+
         function getColor(status) {
-          return status === "been" ? "#4ade80" : "#60a5fa";
+          return status === "been" ? "#57c271" : "#6f9df5";
         }
 
         places.forEach(place => {
+          if (typeof place.lat !== "number" || typeof place.lng !== "number") {
+            return;
+          }
+
           const marker = L.circleMarker([place.lat, place.lng], {
             radius: 8,
             fillColor: getColor(place.status),
-            color: "#0f1115",
+            color: "#05070b",
             weight: 2,
             opacity: 1,
             fillOpacity: 0.95
           }).addTo(map);
 
           marker.bindPopup(`
-            <div class="popup-title">${place.name}</div>
+            <div class="popup-title">${escapeHtml(place.name || "Unknown place")}</div>
             <div class="popup-meta">${place.status === "been" ? "Been" : "Want to go"}</div>
           `);
+
+          bounds.push([place.lat, place.lng]);
         });
+
+        if (bounds.length) {
+          map.fitBounds(bounds, { padding: [40, 40] });
+        }
       } catch (error) {
         console.error(error);
         document.getElementById("error").innerHTML = `
@@ -249,6 +122,15 @@
           </div>
         `;
       }
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
     }
 
     initTravelPage();
