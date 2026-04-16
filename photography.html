@@ -51,6 +51,40 @@
       border-color: #3a404c;
     }
 
+    .filters {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .filter-btn {
+      background: #1a1d23;
+      color: #e6e6e6;
+      border: 1px solid #2a2f38;
+      border-radius: 999px;
+      padding: 10px 14px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: 0.2s ease;
+    }
+
+    .filter-btn:hover {
+      border-color: #3a404c;
+    }
+
+    .filter-btn.active {
+      background: #e6e6e6;
+      color: #0f1115;
+      border-color: #e6e6e6;
+    }
+
+    .gallery-meta {
+      margin-bottom: 18px;
+      font-size: 0.95rem;
+      opacity: 0.7;
+    }
+
     .gallery {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -85,14 +119,24 @@
       left: 0;
       right: 0;
       padding: 10px 12px;
-      background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
-      font-size: 0.85rem;
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.88));
       opacity: 0;
       transition: 0.2s ease;
     }
 
     .photo:hover .caption {
       opacity: 1;
+    }
+
+    .caption-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .caption-meta {
+      font-size: 0.78rem;
+      opacity: 0.75;
     }
 
     .error-message {
@@ -129,10 +173,15 @@
     </div>
 
     <div id="error"></div>
-    <div class="gallery" id="gallery"></div>
+    <div id="filters" class="filters"></div>
+    <div id="galleryMeta" class="gallery-meta"></div>
+    <div id="gallery" class="gallery"></div>
   </div>
 
   <script>
+    let allPhotos = [];
+    let activeSeries = "All";
+
     async function loadPhotos() {
       try {
         const response = await fetch("data/photos.json");
@@ -141,20 +190,10 @@
           throw new Error(`Failed to load photos: ${response.status}`);
         }
 
-        const photos = await response.json();
-        const gallery = document.getElementById("gallery");
+        allPhotos = await response.json();
 
-        photos.forEach(photo => {
-          const div = document.createElement("div");
-          div.className = "photo";
-
-          div.innerHTML = `
-            <img src="assets/photos/${photo.file}" alt="${photo.caption}">
-            <div class="caption">${photo.caption}</div>
-          `;
-
-          gallery.appendChild(div);
-        });
+        renderFilters(allPhotos);
+        renderGallery();
       } catch (err) {
         console.error("Failed to load photos", err);
         document.getElementById("error").innerHTML = `
@@ -163,6 +202,57 @@
           </div>
         `;
       }
+    }
+
+    function renderFilters(photos) {
+      const filtersEl = document.getElementById("filters");
+      const seriesList = [...new Set(photos.map(photo => photo.series).filter(Boolean))];
+      const allFilters = ["All", ...seriesList];
+
+      filtersEl.innerHTML = "";
+
+      allFilters.forEach(series => {
+        const button = document.createElement("button");
+        button.className = `filter-btn ${series === activeSeries ? "active" : ""}`;
+        button.textContent = series;
+        button.addEventListener("click", () => {
+          activeSeries = series;
+          renderFilters(allPhotos);
+          renderGallery();
+        });
+        filtersEl.appendChild(button);
+      });
+    }
+
+    function renderGallery() {
+      const gallery = document.getElementById("gallery");
+      const galleryMeta = document.getElementById("galleryMeta");
+
+      const visiblePhotos = activeSeries === "All"
+        ? allPhotos
+        : allPhotos.filter(photo => photo.series === activeSeries);
+
+      gallery.innerHTML = "";
+
+      galleryMeta.textContent =
+        activeSeries === "All"
+          ? `${visiblePhotos.length} images`
+          : `${visiblePhotos.length} images in ${activeSeries}`;
+
+      visiblePhotos.forEach(photo => {
+        const div = document.createElement("div");
+        div.className = "photo";
+
+        div.innerHTML = `
+          <img src="assets/photos/${photo.file}" alt="${photo.caption}">
+          <div class="caption">
+            <div class="caption-title">${photo.caption}</div>
+            <div class="caption-meta">${photo.location} · ${photo.series}</div>
+          </div>
+        `;
+
+        gallery.appendChild(div);
+      });
     }
 
     loadPhotos();
