@@ -1,74 +1,41 @@
-# Charlie HQ
+## Project Context (for AI)
 
-Personal intranet for projects, thinking, and experimentation with AI-assisted coding.
+This is a personal intranet hosted on GitHub Pages at charliedavidson.co.uk.
 
-Live: https://charliedavidson.co.uk
+### Stack
+- Static HTML, CSS, JS
+- Hosted via GitHub Pages
+- No backend (yet)
 
----
+### Structure
+- index.html → dashboard
+- travel.html → map-based travel tracker (Leaflet)
+- photography.html → gallery of photos
 
-## Overview
+### Data-driven approach
+- data/travel.json → locations for map
+- data/photos.json → photography metadata
 
-This is a static site hosted on GitHub Pages, designed to evolve over time:
+### Assets
+- assets/photos/ → all photography images
 
-- **V1**: Static HTML, CSS, JavaScript
-- **V2**: Serverless enhancements (Cloudflare Workers, auth)
-- **V3**: Full personal platform (data, automation, AI workflows)
+### Current features
+- Travel map with visited vs wishlist pins
+- Photography gallery with:
+  - captions
+  - location
+  - series
+  - filtering by series
 
----
+### Goal
+- Learn AI-assisted coding properly
+- Build iteratively (v1 static → v2 serverless later)
+- Create a personal intranet for:
+  - travel planning
+  - photography projects
+  - future tools
 
-## Current Features
-
-### Dashboard
-- `index.html`
-- Entry point to all projects
-- Minimal, dark UI with project cards
-
-### Travel
-- `travel.html`
-- Interactive map using Leaflet
-- Displays visited vs planned destinations
-- Stats summary (total / visited / want to go)
-
-Data:
-- `data/travel.json`
-- Stores all travel locations with:
-  - name
-  - latitude / longitude
-  - status (`been` or `want`)
-
----
-
-## Project Structure
-├── index.html
-├── travel.html
-├── data/
-│ └── travel.json
-
-
----
-
-## Tech Stack
-
-- GitHub Pages (hosting)
-- HTML / CSS / JavaScript (no framework)
-- Leaflet.js (map rendering)
-- OpenStreetMap tiles
-
----
-
-## Design Principles
-
-- Clean, minimal UI
-- Dark theme
-- Fast, static-first approach
-- Separation of concerns (UI vs data)
-- Iterative development (small safe changes)
-
----
-
-## Next Steps
-
-- Photography page (image grid)
-- Travel filters (been / want toggle)
-- Move more data to JSON
-- Introduce authentication layer (Cloudflare Workers)
+### Style direction
+- Minimal, high-contrast
+- Clean UI
+- Focus on content over decoration
