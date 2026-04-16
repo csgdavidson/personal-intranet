@@ -6,137 +6,187 @@
   <title>Photography | Charlie HQ</title>
 
   <style>
+    :root {
+      --bg: #05070b;
+      --panel: #11151b;
+      --panel-border: #242a34;
+      --text: #f2f2f2;
+      --muted: #8f97a3;
+      --muted-soft: #6f7782;
+      --active-bg: #f2f2f2;
+      --active-text: #05070b;
+      --max-width: 1400px;
+      --gutter: 16px;
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      background: var(--bg);
+    }
+
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #0f1115;
-      color: #e6e6e6;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
     }
 
     .container {
-      max-width: 1100px;
-      margin: 40px auto;
-      padding: 0 20px;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 28px 20px 56px;
     }
 
     .topbar {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      margin-bottom: 30px;
+      align-items: flex-start;
+      gap: 24px;
+      margin-bottom: 34px;
       flex-wrap: wrap;
-      gap: 20px;
     }
 
     h1 {
       margin: 0;
-      font-size: 2rem;
+      font-size: clamp(2rem, 3vw, 2.6rem);
+      line-height: 1;
+      letter-spacing: -0.03em;
+      font-weight: 700;
     }
 
     .subtitle {
-      margin-top: 6px;
-      opacity: 0.6;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 1rem;
     }
 
     .back-link {
       text-decoration: none;
-      color: #e6e6e6;
-      border: 1px solid #2a2f38;
-      padding: 10px 14px;
-      border-radius: 10px;
-      background: #1a1d23;
+      color: var(--text);
+      border: 1px solid var(--panel-border);
+      padding: 12px 16px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.04);
+      transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+      white-space: nowrap;
     }
 
     .back-link:hover {
-      border-color: #3a404c;
+      border-color: #394252;
+      background: rgba(255, 255, 255, 0.06);
+      transform: translateY(-1px);
     }
 
     .filters {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
-      margin-bottom: 24px;
+      margin-bottom: 22px;
     }
 
     .filter-btn {
-      background: #1a1d23;
-      color: #e6e6e6;
-      border: 1px solid #2a2f38;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      border: 1px solid var(--panel-border);
       border-radius: 999px;
-      padding: 10px 14px;
+      padding: 10px 15px;
       cursor: pointer;
-      font-size: 0.9rem;
-      transition: 0.2s ease;
+      font-size: 0.92rem;
+      transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
     }
 
     .filter-btn:hover {
-      border-color: #3a404c;
+      border-color: #394252;
+      transform: translateY(-1px);
     }
 
     .filter-btn.active {
-      background: #e6e6e6;
-      color: #0f1115;
-      border-color: #e6e6e6;
+      background: var(--active-bg);
+      color: var(--active-text);
+      border-color: var(--active-bg);
     }
 
     .gallery-meta {
-      margin-bottom: 18px;
+      margin-bottom: 24px;
       font-size: 0.95rem;
-      opacity: 0.7;
+      color: var(--muted);
     }
 
     .gallery {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
+      column-count: 3;
+      column-gap: var(--gutter);
     }
 
-    .photo {
-      position: relative;
-      overflow: hidden;
-      border-radius: 10px;
-      background: #1a1d23;
-      min-height: 280px;
-    }
-
-    .photo img {
+    .photo-card {
+      display: inline-block;
       width: 100%;
-      height: 100%;
-      object-fit: cover;
+      margin: 0 0 22px;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .photo-frame {
+      margin: 0;
+    }
+
+    .photo-link {
       display: block;
-      filter: grayscale(100%) contrast(110%);
-      transition: 0.3s ease;
+      text-decoration: none;
+      color: inherit;
     }
 
-    .photo:hover img {
-      transform: scale(1.03);
-      filter: grayscale(100%) contrast(120%);
+    .photo-image-wrap {
+      background: #0d1015;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.04);
     }
 
-    .caption {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 10px 12px;
-      background: linear-gradient(transparent, rgba(0, 0, 0, 0.88));
-      opacity: 0;
-      transition: 0.2s ease;
+    .photo-image {
+      display: block;
+      width: 100%;
+      height: auto;
+      filter: grayscale(100%) contrast(108%);
+      transition: transform 0.28s ease, filter 0.28s ease, opacity 0.28s ease;
     }
 
-    .photo:hover .caption {
-      opacity: 1;
+    .photo-link:hover .photo-image {
+      transform: scale(1.012);
+      filter: grayscale(100%) contrast(116%);
     }
 
-    .caption-title {
-      font-size: 0.9rem;
-      font-weight: 600;
-      margin-bottom: 2px;
+    .photo-meta {
+      padding-top: 10px;
     }
 
-    .caption-meta {
-      font-size: 0.78rem;
-      opacity: 0.75;
+    .photo-caption {
+      margin: 0;
+      font-size: 0.95rem;
+      line-height: 1.45;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .photo-detail-row {
+      margin-top: 6px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 0.75rem;
+      line-height: 1.4;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted-soft);
+    }
+
+    .photo-detail {
+      white-space: nowrap;
     }
 
     .error-message {
@@ -148,15 +198,39 @@
       margin-bottom: 18px;
     }
 
-    @media (max-width: 900px) {
+    .empty-state {
+      color: var(--muted);
+      padding: 18px 0;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 1100px) {
       .gallery {
-        grid-template-columns: repeat(2, 1fr);
+        column-count: 2;
       }
     }
 
-    @media (max-width: 500px) {
+    @media (max-width: 640px) {
+      .container {
+        padding: 24px 16px 40px;
+      }
+
+      .topbar {
+        margin-bottom: 26px;
+      }
+
       .gallery {
-        grid-template-columns: 1fr;
+        column-count: 1;
+        column-gap: 0;
+      }
+
+      .photo-card {
+        margin-bottom: 26px;
+      }
+
+      .back-link {
+        width: 100%;
+        text-align: center;
       }
     }
   </style>
@@ -167,7 +241,7 @@
     <div class="topbar">
       <div>
         <h1>Photography</h1>
-        <div class="subtitle">Black & white explorations</div>
+        <div class="subtitle">Black &amp; white explorations</div>
       </div>
       <a class="back-link" href="index.html">← Back to dashboard</a>
     </div>
@@ -239,20 +313,55 @@
           ? `${visiblePhotos.length} images`
           : `${visiblePhotos.length} images in ${activeSeries}`;
 
-      visiblePhotos.forEach(photo => {
-        const div = document.createElement("div");
-        div.className = "photo";
+      if (!visiblePhotos.length) {
+        gallery.innerHTML = `<div class="empty-state">No images found for this series.</div>`;
+        return;
+      }
 
-        div.innerHTML = `
-          <img src="assets/photos/${photo.file}" alt="${photo.caption}">
-          <div class="caption">
-            <div class="caption-title">${photo.caption}</div>
-            <div class="caption-meta">${photo.location} · ${photo.series}</div>
-          </div>
+      visiblePhotos.forEach(photo => {
+        const card = document.createElement("article");
+        card.className = "photo-card";
+
+        const caption = escapeHtml(photo.caption || "");
+        const location = escapeHtml(photo.location || "");
+        const series = escapeHtml(photo.series || "");
+        const file = encodeURI(photo.file || "");
+        const altText = caption || `${location}${series ? `, ${series}` : ""}` || "Photograph";
+
+        const detailParts = [location, series].filter(Boolean)
+          .map(value => `<span class="photo-detail">${value}</span>`)
+          .join("");
+
+        card.innerHTML = `
+          <figure class="photo-frame">
+            <a class="photo-link" href="assets/photos/${file}" target="_blank" rel="noopener">
+              <div class="photo-image-wrap">
+                <img
+                  class="photo-image"
+                  src="assets/photos/${file}"
+                  alt="${altText}"
+                  loading="lazy"
+                />
+              </div>
+            </a>
+            <figcaption class="photo-meta">
+              ${caption ? `<p class="photo-caption">${caption}</p>` : ""}
+              ${detailParts ? `<div class="photo-detail-row">${detailParts}</div>` : ""}
+            </figcaption>
+          </figure>
         `;
 
-        gallery.appendChild(div);
+        gallery.appendChild(card);
       });
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
     }
 
     loadPhotos();
