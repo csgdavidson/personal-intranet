@@ -33,6 +33,7 @@
       </div>
     </div>
 
+    <div id="travelFilters" class="filters"></div>
     <div id="stats" class="travel-stats"></div>
     <div id="error"></div>
 
@@ -47,6 +48,11 @@
   ></script>
 
   <script>
+    let allPlaces = [];
+    let activeStatusFilter = "all";
+    let map = null;
+    let markerLayer = null;
+
     async function initTravelPage() {
       try {
         const response = await fetch("data/travel.json");
@@ -55,65 +61,19 @@
           throw new Error(`Failed to load travel data: ${response.status}`);
         }
 
-        const places = await response.json();
+        allPlaces = await response.json();
 
-        const totalPlaces = places.length;
-        const beenPlaces = places.filter(p => p.status === "been").length;
-        const wantPlaces = places.filter(p => p.status === "want").length;
+        map = L.map("map", { worldCopyJump: true }).setView([25, 10], 2);
 
-        document.getElementById("stats").innerHTML = `
-          <article class="stat-card">
-            <span class="stat-value">${totalPlaces}</span>
-            <div class="stat-label">Total places</div>
-          </article>
-          <article class="stat-card">
-            <span class="stat-value">${beenPlaces}</span>
-            <div class="stat-label">Visited</div>
-          </article>
-          <article class="stat-card">
-            <span class="stat-value">${wantPlaces}</span>
-            <div class="stat-label">Want to go</div>
-          </article>
-        `;
-
-        const map = L.map("map", { worldCopyJump: true }).setView([25, 10], 2);
+        markerLayer = L.layerGroup().addTo(map);
 
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
           maxZoom: 18,
           attribution: "&copy; OpenStreetMap contributors"
         }).addTo(map);
 
-        const bounds = [];
-
-        function getColor(status) {
-          return status === "been" ? "#57c271" : "#6f9df5";
-        }
-
-        places.forEach(place => {
-          if (typeof place.lat !== "number" || typeof place.lng !== "number") {
-            return;
-          }
-
-          const marker = L.circleMarker([place.lat, place.lng], {
-            radius: 8,
-            fillColor: getColor(place.status),
-            color: "#05070b",
-            weight: 2,
-            opacity: 1,
-            fillOpacity: 0.95
-          }).addTo(map);
-
-          marker.bindPopup(`
-            <div class="popup-title">${escapeHtml(place.name || "Unknown place")}</div>
-            <div class="popup-meta">${place.status === "been" ? "Been" : "Want to go"}</div>
-          `);
-
-          bounds.push([place.lat, place.lng]);
-        });
-
-        if (bounds.length) {
-          map.fitBounds(bounds, { padding: [40, 40] });
-        }
+        renderFilters();
+        renderTravel();
       } catch (error) {
         console.error(error);
         document.getElementById("error").innerHTML = `
@@ -121,6 +81,90 @@
             Could not load travel data.
           </div>
         `;
+      }
+    }
+
+    function renderFilters() {
+      const filtersEl = document.getElementById("travelFilters");
+      const filters = [
+        { key: "all", label: "All" },
+        { key: "been", label: "Visited" },
+        { key: "want", label: "Want to go" }
+      ];
+
+      filtersEl.innerHTML = "";
+
+      filters.forEach(filter => {
+        const button = document.createElement("button");
+        button.className = `filter-btn ${filter.key === activeStatusFilter ? "active" : ""}`;
+        button.textContent = filter.label;
+        button.addEventListener("click", () => {
+          activeStatusFilter = filter.key;
+          renderFilters();
+          renderTravel();
+        });
+        filtersEl.appendChild(button);
+      });
+    }
+
+    function renderTravel() {
+      const visiblePlaces = activeStatusFilter === "all"
+        ? allPlaces
+        : allPlaces.filter(place => place.status === activeStatusFilter);
+
+      renderStats(visiblePlaces);
+      renderMarkers(visiblePlaces);
+    }
+
+    function renderStats(places) {
+      const totalPlaces = places.length;
+      const beenPlaces = places.filter(place => place.status === "been").length;
+      const wantPlaces = places.filter(place => place.status === "want").length;
+
+      document.getElementById("stats").innerHTML = `
+        <article class="stat-card">
+          <span class="stat-value">${totalPlaces}</span>
+          <div class="stat-label">Total places</div>
+        </article>
+        <article class="stat-card">
+          <span class="stat-value">${beenPlaces}</span>
+          <div class="stat-label">Visited</div>
+        </article>
+        <article class="stat-card">
+          <span class="stat-value">${wantPlaces}</span>
+          <div class="stat-label">Want to go</div>
+        </article>
+      `;
+    }
+
+    function renderMarkers(places) {
+      const bounds = [];
+      markerLayer.clearLayers();
+
+      places.forEach(place => {
+        if (typeof place.lat !== "number" || typeof place.lng !== "number") {
+          return;
+        }
+
+        const marker = L.circleMarker([place.lat, place.lng], {
+          radius: 8,
+          fillColor: place.status === "been" ? "#57c271" : "#6f9df5",
+          color: "#05070b",
+          weight: 2,
+          opacity: 1,
+          fillOpacity: 0.95
+        }).addTo(markerLayer);
+
+        marker.bindPopup(`
+          <div class="popup-title">${escapeHtml(place.name || "Unknown place")}</div>
+          <div class="popup-meta">${place.status === "been" ? "Been" : "Want to go"}</div>
+        `);
+
+        bounds.push([place.lat, place.lng]);
+      });
+
+      if (bounds.length) {
+        map.fitBounds(bounds, { padding: [40, 40] });
       }
     }
 
