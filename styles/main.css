@@ -488,3 +488,46 @@ h1 {
     height: 440px;
   }
 }
+
+/* Public bio homepage */
+
+.bio-page {
+  max-width: 980px;
+}
+
+.bio-hero {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+.bio-portrait-wrap {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--panel-alt);
+}
+
+.bio-portrait {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.bio-content .lead {
+  margin: 0;
+}
+
+@media (max-width: 820px) {
+  .bio-hero {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  .bio-portrait-wrap {
+    max-width: 360px;
+  }
+}
