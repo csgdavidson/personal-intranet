@@ -527,16 +527,26 @@ h1 {
 .bio-content .lead {
   margin: 0;
   max-width: 56ch;
-  line-height: 1.8;
+  line-height: 1.9;
 }
 
 .bio-content .lead + .lead {
-  margin-top: calc(var(--space-lg) + 2px);
+  margin-top: var(--space-lg);
 }
 
 .bio-content h1 {
+  font-weight: 600;
   line-height: 1.2;
   max-width: 26ch;
+}
+
+.bio-content h1 + .bio-intro {
+  margin-top: calc(var(--space-lg) + 2px);
+}
+
+.bio-content .bio-intro {
+  color: var(--text);
+  font-size: 1.15rem;
 }
 
 .bio-utility-wrap {
